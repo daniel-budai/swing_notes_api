@@ -35,7 +35,8 @@ const changeNote = async (req, res) => {
 
 const deleteNote = async (req, res) => {
   try {
-    const deletedCount = await noteModel.deleteNote(req.params.id);
+    const id = req.body._id; // get the id from the request body
+    const deletedCount = await noteModel.deleteNote(id);
     if (deletedCount === 0) {
       return res.status(404).json({ message: "Note not found" });
     }
