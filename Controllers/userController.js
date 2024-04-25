@@ -1,6 +1,6 @@
 const User = require("../Models/userModel");
 const { insertUser } = require("../Models/userModel");
-const { hashPassword, comparePassword } = require("../utils/bcryptUtils");
+const { hashPassword, comparePassword } = require("../Utils/bcryptUtils");
 
 const signup = (req, res) => {
   const user = req.body;
