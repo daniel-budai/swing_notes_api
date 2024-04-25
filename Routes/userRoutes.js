@@ -1,14 +1,8 @@
 const express = require("express");
 const router = express.Router();
+const userController = require("../Controllers/userController");
 
-router.post("/signup", (req, res) => {
-  //registrera en användare
-  // /api/user/signup
-});
-
-router.post("/login", (req, res) => {
-  //logga in en användare
-  // /api/user/login
-});
+router.post("/signup", userController.signup);
+router.post("/login", userController.login);
 
 module.exports = router;
