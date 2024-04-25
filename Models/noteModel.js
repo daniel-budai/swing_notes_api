@@ -17,15 +17,17 @@ const updateNote = (id, updatedNote) => {
 };
 
 const deleteNote = (id) => {
-  return new Promise((resolve, reject) => {
-    notes.remove({ _id: id }, {}, (err, numRemoved) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(numRemoved);
-      }
-    });
-  });
+  return notes.remove({ _id: id }, {});
 };
 
-module.exports = { getAllNotes, saveNote, updateNote, deleteNote };
+const searchNoteByTitle = (title) => {
+  return notes.findOne({ title: title });
+};
+
+module.exports = {
+  getAllNotes,
+  saveNote,
+  updateNote,
+  deleteNote,
+  searchNoteByTitle,
+};

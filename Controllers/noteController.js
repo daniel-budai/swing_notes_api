@@ -35,7 +35,7 @@ const changeNote = async (req, res) => {
 
 const deleteNote = async (req, res) => {
   try {
-    const id = req.body._id; // get the id from the request body
+    const id = req.body._id;
     const deletedCount = await noteModel.deleteNote(id);
     if (deletedCount === 0) {
       return res.status(404).json({ message: "Note not found" });
@@ -46,4 +46,25 @@ const deleteNote = async (req, res) => {
   }
 };
 
-module.exports = { getNotes, saveNote, changeNote, deleteNote };
+const searchNoteByTitle = async (req, res) => {
+  try {
+    const title = req.body.title;
+    const note = await noteModel.searchNoteByTitle(title);
+    if (!note) {
+      return res
+        .status(404)
+        .json({ message: "Could not find note with that title" });
+    }
+    res.status(200).json(note);
+  } catch (error) {
+    res.status(500).json({ message: "Error finding note" });
+  }
+};
+
+module.exports = {
+  getNotes,
+  saveNote,
+  changeNote,
+  deleteNote,
+  searchNoteByTitle,
+};
