@@ -11,10 +11,10 @@ const insertUser = (user, callback) => {
 };
 
 const findUser = (query, callback) => {
-  users.findOne(query, callback);
+  users
+    .findOne(query)
+    .then((user) => callback(null, user))
+    .catch(callback);
 };
 
-module.exports = {
-  insertUser,
-  findUser,
-};
+module.exports = { insertUser, findUser };
