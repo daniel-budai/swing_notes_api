@@ -1,4 +1,8 @@
 const noteModel = require("../Models/noteModel");
+const {
+  validateNoteTitleLength,
+  validateNoteTextLength,
+} = require("../Validators/noteValidators");
 
 const getNotes = async (req, res) => {
   try {
@@ -10,6 +14,18 @@ const getNotes = async (req, res) => {
 };
 
 const saveNote = async (req, res) => {
+  const { title, text } = req.body;
+  const titleError = validateNoteTitleLength(title);
+  const textError = validateNoteTextLength(text);
+
+  if (titleError) {
+    return res.status(400).json({ message: titleError });
+  }
+
+  if (textError) {
+    return res.status(400).json({ message: textError });
+  }
+
   try {
     const savedNote = await noteModel.saveNote(req.body);
     res.status(200).json(savedNote);
@@ -19,6 +35,18 @@ const saveNote = async (req, res) => {
 };
 
 const changeNote = async (req, res) => {
+  const { title, text } = req.body;
+  const titleError = validateNoteTitleLength(title);
+  const textError = validateNoteTextLength(text);
+
+  if (titleError) {
+    return res.status(400).json({ message: titleError });
+  }
+
+  if (textError) {
+    return res.status(400).json({ message: textError });
+  }
+
   try {
     const id = req.body._id;
     const updatedNoteData = { ...req.body };

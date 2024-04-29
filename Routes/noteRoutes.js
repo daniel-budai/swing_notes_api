@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const noteController = require("../Controllers/noteController");
-const verifyToken = require("../Middleware/tokenAuth"); // Import the middleware
+const verifyToken = require("../Middleware/tokenAuth");
 
 router.get("/", verifyToken, noteController.getNotes);
 router.post("/", verifyToken, noteController.saveNote);
