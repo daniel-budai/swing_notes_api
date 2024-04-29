@@ -9,10 +9,15 @@ const getAllNotes = () => {
 };
 
 const saveNote = (note) => {
+  note.createdAt = new Date().toISOString().split(".")[0].replace("T", " ");
   return notes.insert(note);
 };
 
 const updateNote = (id, updatedNote) => {
+  updatedNote.modifiedAt = new Date()
+    .toISOString()
+    .split(".")[0]
+    .replace("T", " ");
   return notes.update({ _id: id }, updatedNote, {});
 };
 
