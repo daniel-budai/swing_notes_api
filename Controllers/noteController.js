@@ -35,7 +35,12 @@ const saveNote = async (req, res) => {
 };
 
 const changeNote = async (req, res) => {
-  const { title, text } = req.body;
+  const { title, text, _id } = req.body;
+
+  if (!title || !text) {
+    return res.status(400).json({ message: "Title and text are required" });
+  }
+
   const titleError = validateNoteTitleLength(title);
   const textError = validateNoteTextLength(text);
 
@@ -48,9 +53,8 @@ const changeNote = async (req, res) => {
   }
 
   try {
-    const id = req.body._id;
-    const updatedNoteData = { ...req.body };
-    const updatedNote = await noteModel.updateNote(id, updatedNoteData);
+    const updatedNoteData = { title, text };
+    const updatedNote = await noteModel.updateNote(_id, updatedNoteData);
     if (updatedNote === 0) {
       return res.status(404).json({ message: "Note not found" });
     }
@@ -76,7 +80,7 @@ const deleteNote = async (req, res) => {
 
 const searchNoteByTitle = async (req, res) => {
   try {
-    const title = req.body.title;
+    const title = req.query.title;
     const note = await noteModel.searchNoteByTitle(title);
     if (!note) {
       return res

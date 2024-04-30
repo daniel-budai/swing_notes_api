@@ -131,7 +131,7 @@
             }
         },
         "/notes/search": {
-            "post": {
+            "get": {
                 "summary": "Search notes by title",
                 "security": [
                     {
@@ -140,11 +140,13 @@
                   ],
                 "parameters": [
                     {
-                        "in": "body",
+                        "in": "query",
                         "name": "title",
                         "description": "The title to search for",
                         "required": true,
-                        "type": "string"
+                        "schema": {
+                            "type": "string"
+                        }                        
                     }
                 ],
                 "responses": {
