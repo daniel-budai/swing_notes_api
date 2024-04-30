@@ -1,0 +1,264 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Note API",
+        "description": "API for managing notes"
+    },
+    "host": "localhost:3000",
+    "basePath": "/api",
+    "schemes": ["http"],
+    "securityDefinitions": {
+        "BearerAuth": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
+    },
+    "paths": {
+        "/notes": {
+            "get": {
+                "summary": "Get all notes",
+                "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+                "responses": {
+                    "200": {
+                        "description": "A list of notes",
+                        "schema": {
+                            "$ref": "#/definitions/NoteArray"
+                        }
+                    },
+                    "500": {
+                        "description": "Error fetching notes"
+                    }
+                }
+            },
+            "post": {
+                "summary": "Save a new note",
+                "security": [
+                    {
+                      "BearerAuth": []
+                    }
+                  ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "note",
+                        "description": "The note to create",
+                        "schema": {
+                            "$ref": "#/definitions/Note"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The created note",
+                        "schema": {
+                            "$ref": "#/definitions/Note"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid note data"
+                    },
+                    "500": {
+                        "description": "Error saving note"
+                    }
+                }
+            },
+            "put": {
+                "summary": "Update a note",
+                "security": [
+                    {
+                      "BearerAuth": []
+                    }
+                  ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "note",
+                        "description": "The note data to update",
+                        "schema": {
+                            "$ref": "#/definitions/Note"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Note updated successfully"
+                    },
+                    "400": {
+                        "description": "Invalid note data"
+                    },
+                    "404": {
+                        "description": "Note not found"
+                    },
+                    "500": {
+                        "description": "Error updating note"
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete a note",
+                "security": [
+                    {
+                      "BearerAuth": []
+                    }
+                  ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "note",
+                        "description": "The ID of the note to delete",
+                        "schema": {
+                            "$ref": "#/definitions/Note"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Note deleted successfully"
+                    },
+                    "404": {
+                        "description": "Note not found"
+                    },
+                    "500": {
+                        "description": "Error deleting note"
+                    }
+                }
+            }
+        },
+        "/notes/search": {
+            "post": {
+                "summary": "Search notes by title",
+                "security": [
+                    {
+                      "BearerAuth": []
+                    }
+                  ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "title",
+                        "description": "The title to search for",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The found note",
+                        "schema": {
+                            "$ref": "#/definitions/Note"
+                        }
+                    },
+                    "404": {
+                        "description": "Could not find note with that title"
+                    },
+                    "500": {
+                        "description": "Error finding note"
+                    }
+                }
+            }
+        },
+        "/user/signup": {
+            "post": {
+                "summary": "Sign up a new user",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "user",
+                        "description": "The user to create",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User created successfully"
+                    },
+                    "500": {
+                        "description": "Error creating user"
+                    }
+                }
+            }
+        },
+        "/user/login": {
+            "post": {
+                "summary": "Log in a user",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "user",
+                        "description": "The user to log in",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Logged in successfully"
+                    },
+                    "401": {
+                        "description": "Incorrect password"
+                    },
+                    "404": {
+                        "description": "User not found"
+                    },
+                    "500": {
+                        "description": "Error finding user"
+                    }
+                }
+            }
+        }
+    },
+   
+    "definitions": {
+        "Note": {
+            "type": "object",
+            "properties": {
+                "_id": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "text": {
+                    "type": "string"
+                },
+                "createdAt": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "modifiedAt": {
+                    "type": "string",
+                    "format": "date-time"
+                }
+            }
+        },
+        "NoteArray": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/Note"
+            }
+        },
+        "User": {
+            "type": "object",
+            "properties": {
+                "username": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
+
