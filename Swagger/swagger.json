@@ -192,6 +192,11 @@
         "/user/login": {
             "post": {
                 "summary": "Log in a user",
+                "security": [
+                    {
+                      "BearerAuth": []
+                    }
+                  ],
                 "parameters": [
                     {
                         "in": "body",
